@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>TTM</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+    <META HTTP-EQUIV="EXPIRES" CONTENT="0">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/header.css" />
+    <link rel="stylesheet" href="assets/css/footer.css" />
+    <link rel="stylesheet" href="assets/css/content.css" />
+</head>
+<body>
+    <div class="header">
+        <img src="assets/img/logo.png" class="logo centerWrapper" />
+    </div>
+    <div class="content">
+        <img src="assets/img/background.jpg" class="background" />
+        <div id="outOfTimeDiv" class="fullWrapper" style="display:none">
+            <div class="exceptGridContainer XcenterWrapper">
+                <div>
+                    <h1>
+                        現在不是<br />
+                        活動時間喲
+                    </h1>
+                </div>
+                <div></div>
+                <div>
+                    <img class="imgBtnMedium" src="assets/img/btnGetInfo.png"  onclick="onBtnInfo()"/>
+                </div>
+                <div>
+                    <img class="imgBtnMedium" src="assets/img/btnHomePage.png" onclick="onBtnHomePage()"/>
+                </div>
+            </div>
+        </div>
+        <div id="loginDiv" class="fullWrapper">
+            <div class="loginGridContainer XcenterWrapper">
+                <div>
+                    <h1>Hi 這裡是<br>候選等待區</h1>
+                </div>
+                <div>
+                    <h4>
+                        請依照現場主持人的指示<br>
+                        倒數完畢後<br>
+                        立刻按下下方按鈕
+                    </h4>
+                </div>
+                <div>
+                    <img class="imgBtnLarge" src="assets/img/btnStart.png" onclick="onBtnStart()"/>
+                </div>
+                <div>
+                    <h5>
+                        系統將選出手速最快的48位觀眾<br />
+                        參與接下來的面膜翻牌活動
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div id="sorryDiv" class="fullWrapper" style="display:none">
+            <div class="exceptGridContainer XcenterWrapper">
+                <div>
+                    <h1>
+                        好可惜<br />慢了一點點...
+                    </h1>
+                </div>
+                <div>
+                    <h4>
+                        等一下還有其他精彩活動<br />
+                        希望你願意留下來參與
+                    </h4>
+                </div>
+                <div>
+                    <img class="imgBtnMedium" src="assets/img/btnGetInfo2.png" onclick="onBtnInfo()"/>
+                </div>
+                <div>
+                    <img class="imgBtnMedium" src="assets/img/btnHomePage.png" onclick="onBtnHomePage()"/>
+                </div>
+            </div>
+        </div>
+        <div id="gameDiv" class="fullWrapper gameBackground"  style="display:none">
+            <div class="gameGridContainer XcenterWrapper">
+                <div>
+                    <h2>
+                        恭喜你成功進入活動
+                    </h2>
+                </div>
+                <div>
+                    <h4>下方藍光處是你所控制的16片面膜</h4>
+                </div>
+                <div class="miniBackground">
+                    <img class="mini" src="assets/img/mini.png" />
+                </div>
+                <div>
+                    <h3 class="blueText">請依燈號指示點選翻牌</h3>
+                </div>
+                <div class="ctrlDiv">
+                    <div class="ctrlGridContainer XcenterWrapper">
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0"/>
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png"/>
+                        </div>
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                        <div name="ctrlDiv" class="ctrlGridDiv" onclick="onBtnCtrl(this)">
+                            <img name="ctrl" class="ctrlElement" src="assets/img/white.png" data-state="0" />
+                            <img name="mark" class="mark centerWrapper" src="assets/img/mark.png" />
+                        </div>  
+                    </div>
+                </div>
+                <div>
+                    <img class="imgBtnSmall" src="assets/img/btnSubmit.png" onclick="onBtnSubmit()"/>
+                </div>
+                <div>
+                    <h4>倒數120秒</h4>
+                </div>
+            </div>
+        </div>
+        <div id="resultDiv" class="fullWrapper"  style="display:none">
+            <div class="resultGridContainer XcenterWrapper">
+                <div>
+                    <h1>
+                        謝謝你
+                    </h1>
+                </div>
+                <div>
+                    <h3>
+                       送你一份會變美的禮物 
+                    </h3>
+                </div>
+                <div></div>
+                <div >
+                    <img class="imgBtnMedium" src="assets/img/coupon.png" />
+                </div>
+                <div>
+                    <h5>
+                        本折扣碼只能使用一次<br>
+                        請截圖收藏
+                    </h5>
+                </div>
+                <div>
+                    <img class="imgBtnMedium" src="assets/img/btnHomePage2.png" onclick="onBtnHomePage2()"/>
+                </div>
+            </div>
+            <div class="attentionDiv">
+                <img class="attentionImg centerWrapper" src="assets/img/attention.png" />
+            </div>
+        </div>
+
+    </div>
+    <div id="footer" class="footer">
+        <div class="footerCtrlDiv">
+            <div class="footerCtrl centerWrapper"></div>
+        </div>
+        <div class="socialDiv">
+            <div class="socialGridContainer centerWrapper">
+                <div><img src="assets/img/btnFB.png" class="socialBtn" /></div>
+                <div><img src="assets/img/btnLine.png" class="socialBtn" /></div>
+                <div><img src="assets/img/btnIG.png" class="socialBtn" /></div>
+            </div>
+        </div>
+        <div class="copyrightDiv">
+            <img src="assets/img/copyright.png" class="copyright centerWrapper" />
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.32.2/dist/sweetalert2.all.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

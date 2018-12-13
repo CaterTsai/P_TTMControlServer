@@ -1,0 +1,12 @@
+﻿div.header
+{
+    position:absolute;
+    width:100%;
+    height:7%;
+    top:0;
+    background:#201e1f;
+}
+
+img.logo{
+    width:30%;
+}

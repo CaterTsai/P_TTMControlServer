@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    設定模式：<input id="mode" type="number" max="1" min="0"><button onclick="onBtnSetMode()">送出</button><br />
+    <hr />
+    DJ問候：<input id="greeting"/><button onclick="onBtnDJGreeting()">送出</button><br />
+    DJ訊息：<input id="message" /><button onclick="onBtnDJMessage()">送出</button><br />
+    <hr />
+    問題：<input id="question" type="number" max="10" min="0"><button onclick="onBtnSetQuestion()">送出</button><br />
+    答題：<input id="ansId" type="number" max="47" min="0"><button onclick="onBtnAns()">送出</button><br />
+    公佈：<button onclick="onBtnSolution()">送出</button><br>
+    號碼：<input id="code" /><button onclick="onBtnCode()">送出</button><br />
+
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.4.0.min.js"></script>
+    <script src="signalr/hubs"></script>
+    <script src="Scripts/backend.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+﻿/*#region DIV */
+div.content {
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    top: 7%;
+}
+
+/*#region DIV-LOGIN */
+div.loginGridContainer{
+    top:5%;
+    width: 70%;
+    height:80%;
+    display:grid;
+    grid-template-columns: 100%;
+    grid-template-rows:33.3% 33.3% 20% 14.4%;
+    text-align:center;
+    align-items:center;
+}
+/*#endregion */
+
+/*#region DIV-EXCEPT */
+div.exceptGridContainer{
+    top:10%;
+    width: 85%;
+    height:80%;
+    display:grid;
+    grid-template-columns: 100%;
+    grid-template-rows:33.3% 33.3% 16.6% 16.6%;
+    text-align:center;
+    align-items:center;
+}
+/*#endregion */
+
+/*#region DIV-GAME */
+div.gameGridContainer{
+    width: 100%;
+    height:98%;
+    display:grid;
+    grid-template-columns: 100%;
+    grid-template-rows:10% 5% 25% 6% 43% 6% 5%;
+    text-align:center;
+    align-items:center;
+}
+
+div.gameBackground{
+    background-color:#1a1a1a;
+}
+
+div.miniBackground{
+    height:100%;
+    background-color:#d5d5d5;
+}
+
+div.ctrlDiv{
+    position:relative;
+    height:100%;
+}
+
+div.ctrlGridContainer{
+    width: 40%;
+    height:95%;
+    display:grid;
+    grid-template-columns: 24% 24% 24% 24%;
+    grid-template-rows:24% 24% 24% 24%;
+    grid-gap:1%;
+    text-align:center;
+    align-items:center;
+}
+
+div.ctrlGridDiv{
+    position:relative;
+}
+/*#endregion */
+
+/*#region DIV-RESULT */
+div.resultGridContainer{
+    width: 80%;
+    height:60%;
+    display:grid;
+    grid-template-columns: 100%;
+    grid-template-rows:15% 10% 10% 15% 15% 35%;
+    text-align:center;
+    align-items:center;
+    top:5%
+}
+
+div.attentionDiv{
+    position:absolute;
+    width:100%;
+    height:30%;
+    bottom:0%;
+    background-color:#989898;
+}
+
+/*#endregion */
+
+
+/*#endregion */
+/*#region IMG */
+img.background {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+img.mini{
+    height:90%;
+}
+
+img.ctrlElement{
+    width:100%;
+    height:100%;
+}
+
+img.mark{
+    width:50%;
+    height:50%;
+}
+
+img.attentionImg{
+    
+    width:90%;
+}
+/*#endregion */

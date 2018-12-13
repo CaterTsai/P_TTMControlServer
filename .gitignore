@@ -3,3 +3,10 @@
 ################################################################################
 
 /.vs
+/packages
+/ttmControlServer/obj/Debug
+/ttmControlServer/assets/img
+/ttmControlServer/bin
+/ttmControlServer/Web.config
+/ttmControlServer/Web.Debug.config
+/ttmControlServer/Web.Release.config
