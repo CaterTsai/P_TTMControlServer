@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    code:<input id="code" /><br />
+    index:<input id="index" /><br />
+    ans:<input id="ans" /><br />
+    <button onclick="onGetBtn()">get</button>
+    <button onclick="onCancelBtn()">cancel</button>
+    <button onclick="onSetBtn()">set</button>
+    <button onclick="onAnsBtn()">ans</button>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        window.onload = function () {
+
+        }
+
+        function onGetBtn() {
+            $.ajax({
+                url: "api/question",
+                type: "get"
+            }).success(
+                function (data) {
+                    console.log(data);
+                    alert("send success");
+                }
+           );
+        }
+
+        function onCancelBtn() {
+            var idx = $("#index").val();
+            $.ajax({
+                url: "api/question/" + idx,
+                type: "get"
+            }).success(
+                function (data) {
+                    console.log(data);
+                    alert("send success");
+                }
+           );
+        }
+
+        function onSetBtn() {
+            var c = $("#code").val();
+            var idx = $("#index").val();
+            $.ajax({
+                url: "api/question/set",
+                type: "get",
+                data: { code: c, index: idx },
+            }).success(
+                function (data) {
+                    console.log(data);
+                    alert("send success");
+                }
+           );
+        }
+
+        function onAnsBtn() {
+            var a = $("#ans").val();
+            var idx = $("#index").val();
+            $.ajax({
+                url: "api/question/ans",
+                type: "get",
+                data: { index: idx, ans: a },
+            }).success(
+                function (data) {
+                    console.log(data);
+                    alert("send success");
+                }
+           );
+        }
+
+    </script>
+</body>
+</html>

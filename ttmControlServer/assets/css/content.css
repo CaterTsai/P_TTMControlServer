@@ -2,7 +2,7 @@
 div.content {
     position: absolute;
     width: 100%;
-    height: 90%;
+    height: 93%;
     top: 7%;
 }
 
@@ -48,8 +48,8 @@ div.gameBackground{
 }
 
 div.miniBackground{
+    position:relative;
     height:100%;
-    background-color:#d5d5d5;
 }
 
 div.ctrlDiv{
@@ -59,17 +59,17 @@ div.ctrlDiv{
 
 div.ctrlGridContainer{
     width: 40%;
-    height:95%;
+    
     display:grid;
-    grid-template-columns: 24% 24% 24% 24%;
-    grid-template-rows:24% 24% 24% 24%;
-    grid-gap:1%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap:2%;
     text-align:center;
     align-items:center;
 }
 
 div.ctrlGridDiv{
     position:relative;
+    height:100%;
 }
 /*#endregion */
 
@@ -115,11 +115,49 @@ img.ctrlElement{
 
 img.mark{
     width:50%;
-    height:50%;
+
 }
 
 img.attentionImg{
     
     width:90%;
 }
+/*#endregion */
+
+/*#region OTHER */
+canvas.miniCanvas{
+    height:100%;
+}
+/*#endregion */
+
+/*#region ANIMATION */
+.animate-flicker {
+    -webkit-animation: flickerAnimation 3s infinite;
+    -moz-animation: flickerAnimation 3s infinite;
+    -o-animation: flickerAnimation 3s infinite;
+    animation: flickerAnimation 3s infinite;
+}
+
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+
+
 /*#endregion */

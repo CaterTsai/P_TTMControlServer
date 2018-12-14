@@ -2,6 +2,14 @@
     position: absolute;
     width: 100%;
     height: 20%;
+    top: 100%;
+    background: #ffffff;
+}
+
+div.footer_backup {
+    position: absolute;
+    width: 100%;
+    height: 20%;
     top: 96%;
     background: #ffffff;
     border-top-left-radius: 10%;
@@ -25,12 +33,12 @@ div.socialDiv {
     position: absolute;
     height: 50%;
     width: 100%;
-    top: 10%;
+    top: 0;
 }
 
 div.copyrightDiv {
     position: absolute;
-    height: 40%;
+    height: 50%;
     width: 100%;
     bottom: 0;
 }
