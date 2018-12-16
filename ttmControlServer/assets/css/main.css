@@ -10,10 +10,10 @@ body{
     /*overflow-y:hidden;*/
 }
 
-a, h1, h2, h3, h4, h5, p, input, pre{
+h4, div{
     font-family: 'Noto Sans TC', sans-serif;
     letter-spacing:2px;
-    color:#ffffff;
+
 }
 
 .noselect {

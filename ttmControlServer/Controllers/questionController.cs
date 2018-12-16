@@ -8,25 +8,42 @@ using System.Net.Http;
 using System.Web.Http;
 using ttmControlServer.Models;
 using ttmControlServer.SignalR;
+
 namespace ttmControlServer.Controllers
 {
     public class questionController : ApiController
     {
-        const int questionNum = 48;
-        static questionUnit[] questionSet;
-        static int questionId = -1;
+        const int questionNum = 5;
+        const int answerNum = 48;
+
+        static questionData[] questionSet;        
+        static answerUnit[] answerSet;
+        static bool startEvent = false;
+        static int answerId = -1;
+        private dbMgr _dbMgr = new dbMgr();
 
         public questionController()
-        {
-            if (questionSet == null)
+        {   
+            if (answerSet == null)
             {
-                questionSet = new questionUnit[questionNum];
-                for (var i = 0; i < questionNum; i++)
+                answerSet = new answerUnit[answerNum];
+                for (var i = 0; i < answerNum; i++)
                 {
-                    questionSet[i] = new questionUnit();
-                    questionSet[i].randomSet();
+                    answerSet[i] = new answerUnit();
+                    answerSet[i].randomSet();
                 }
-                questionId = -1;
+                answerId = -1;
+            }
+
+            if(questionSet == null)
+            {
+                _dbMgr.connDB();
+                questionSet = new questionData[questionNum];
+                for(int i = 0; i < questionNum; i++)
+                {
+                    questionSet[i] = new questionData();
+                }
+                _dbMgr.getQuestion(ref questionSet);
             }
         }
 
@@ -36,20 +53,20 @@ namespace ttmControlServer.Controllers
         {
             response rep = new response();
             rep.active = "question/";
-            if (questionId != -1)
+            if (answerId != -1)
             {
                 int index = -1;
-                for (int i = 0; i < questionNum; i++)
+                for (int i = 0; i < answerNum; i++)
                 {
-                    if (!questionSet[i].flag)
+                    if (!answerSet[i].flag)
                     {
-                        questionSet[i].flag = true;
+                        answerSet[i].flag = true;
                         index = i;
                         break;
                     }
                 }
                 rep.result = true;
-                rep.data = questionSet[index].question;
+                rep.data = answerSet[index].answer;
                 rep.index = index;
             }
             else
@@ -68,7 +85,7 @@ namespace ttmControlServer.Controllers
         {
             response rep = new response();
             rep.active = "question/check";
-            if (questionId != -1)
+            if (startEvent)
             {
                 rep.result = true;
             }
@@ -88,16 +105,16 @@ namespace ttmControlServer.Controllers
         {
             response rep = new response();
             rep.active = "question/cancal/";
-            if (val < 0 || val >= questionNum)
+            if (val < 0 || val >= answerNum)
             {
                 rep.msg = "Wrong Index";
                 rep.result = false;
             }
             else
             {
-                if (questionSet[val].flag)
+                if (answerSet[val].flag)
                 {
-                    questionSet[val].flag = false;
+                    answerSet[val].flag = false;
                     rep.result = true;
                 }
                 else
@@ -116,30 +133,52 @@ namespace ttmControlServer.Controllers
         {
             response rep = new response();
             rep.active = "question/ans/";
-            if (index < 0 || index >= questionNum)
+            if (index < 0 || index >= answerNum)
             {
                 rep.msg = "Wrong Index";
                 rep.result = false;
             }
             else
             {
+                if(!startEvent)
+                {
+                    rep.msg = "Out of Time";
+                    rep.result = false;
+                }
+
                 if (ttmHub._hostID == "")
                 {
                     rep.msg = "Host is disconnection";
-                    rep.result = true;
+                    rep.result = false;
+                }
+                else if(ttmHub._mode == 0)
+                {
+                    rep.msg = "Wrong Mode";
+                    rep.result = false;
                 }
                 else
                 {
-                    rep.result = true;
-                    try
+                    if(!answerSet[index].flag || answerSet[index].isAnswer)
                     {
-                        var context = GlobalHost.ConnectionManager.GetHubContext<ttmHub>();
-                        context.Clients.Client(ttmHub._hostID).setAnswer(index, ans);
-                    }
-                    catch (Exception e)
-                    {
+                        rep.msg = "question flag is wrong";
                         rep.result = false;
-                        rep.msg = e.Message;
+                    }
+                    else
+                    {
+                        _dbMgr.connDB();
+                        answerSet[index].isAnswer = true;
+                        rep.result = true;
+                        rep.data = _dbMgr.getDiscount();
+                        try
+                        {
+                            var context = GlobalHost.ConnectionManager.GetHubContext<ttmHub>();
+                            context.Clients.Client(ttmHub._hostID).setAnswer(index, ans);
+                        }
+                        catch (Exception e)
+                        {
+                            rep.result = false;
+                            rep.msg = e.Message;
+                        }
                     }
                 }
 
@@ -147,23 +186,89 @@ namespace ttmControlServer.Controllers
             var repJson = JsonConvert.SerializeObject(rep);
             return repJson;
         }
+
+
+
         #endregion
 
         #region Backend
         [HttpGet]
+        [Route("api/question/start")]
+        public string start(string code)
+        {
+            response rep = new response();
+            rep.active = "question/start/";
+            if (code == System.Web.Configuration.WebConfigurationManager.AppSettings["code"])
+            {
+                startEvent = true;
+                rep.result = true;
+            }
+            else
+            {
+                rep.msg = "Wrong Code";
+                rep.result = false;
+            }
+            var repJson = JsonConvert.SerializeObject(rep);
+            return repJson;
+        }
+
+        [HttpGet]
+        [Route("api/question/stop")]
+        public string stop(string code)
+        {
+            response rep = new response();
+            rep.active = "question/stop/";
+            if (code == System.Web.Configuration.WebConfigurationManager.AppSettings["code"])
+            {
+                startEvent = false;
+                rep.result = true;
+            }
+            else
+            {
+                rep.msg = "Wrong Code";
+                rep.result = false;
+            }
+            var repJson = JsonConvert.SerializeObject(rep);
+            return repJson;
+        }
+
+        [HttpGet]
         [Route("api/question/set")]
         public string set(string code, int index)
         {
-            questionId = index;
+            answerId = index;
             response rep = new response();
             rep.active = "question/set/";
             if (code == System.Web.Configuration.WebConfigurationManager.AppSettings["code"])
             {
-                for (int i = 0; i < questionNum; i++)
+                for (int i = 0; i < answerNum; i++)
                 {
-                    questionSet[i].reset();
-                    questionSet[i].randomSet(); //TODO
+                    answerSet[i].reset();
+                    bool[] answerList = new bool[16];
+                    questionSet[index].getAnswer(i, ref answerList);
+                    answerSet[i].set(ref answerList);
+                    
                 }
+                rep.result = true;
+            }
+            else
+            {
+                rep.msg = "Wrong Code";
+                rep.result = false;
+            }
+            var repJson = JsonConvert.SerializeObject(rep);
+            return repJson;
+        }
+
+        [HttpGet]
+        [Route("api/question/showAns")]
+        public string showAns(string code)
+        {
+            response rep = new response();
+            rep.active = "question/showAns/";
+            if (code == System.Web.Configuration.WebConfigurationManager.AppSettings["code"])
+            {
+                answerId = -1;
                 rep.result = true;
             }
             else

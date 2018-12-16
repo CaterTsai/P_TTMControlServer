@@ -147,11 +147,8 @@
     <Content Include="assets\css\footer.css" />
     <Content Include="assets\css\header.css" />
     <Content Include="assets\css\main.css" />
-    <Content Include="assets\img\arrorUp.png" />
     <Content Include="assets\img\attention.png" />
     <Content Include="assets\img\background.jpg" />
-    <Content Include="assets\img\black.png" />
-    <Content Include="assets\img\btnBG.png" />
     <Content Include="assets\img\btnFB.png" />
     <Content Include="assets\img\btnGetInfo.png" />
     <Content Include="assets\img\btnGetInfo2.png" />
@@ -162,13 +159,22 @@
     <Content Include="assets\img\btnStart.png" />
     <Content Include="assets\img\btnSubmit.png" />
     <Content Include="assets\img\copyright.png" />
-    <Content Include="assets\img\coupon.png" />
+    <Content Include="assets\img\gameTips.png" />
+    <Content Include="assets\img\gameTitle.png" />
     <Content Include="assets\img\hi.png" />
+    <Content Include="assets\img\loginMsg.png" />
+    <Content Include="assets\img\loginTips.png" />
+    <Content Include="assets\img\loginTitle.png" />
     <Content Include="assets\img\logo.png" />
     <Content Include="assets\img\logo2.png" />
     <Content Include="assets\img\mark.png" />
     <Content Include="assets\img\mask.png" />
     <Content Include="assets\img\mini.png" />
+    <Content Include="assets\img\outtimeTitle.png" />
+    <Content Include="assets\img\resultTips.png" />
+    <Content Include="assets\img\resultTitle.png" />
+    <Content Include="assets\img\sorryMsg.png" />
+    <Content Include="assets\img\sorryTitle.png" />
     <Content Include="assets\img\submit.png" />
     <Content Include="assets\img\white.png" />
     <Content Include="assets\js\main.js" />
@@ -190,7 +196,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\questionUnit.cs" />
+    <Compile Include="Models\dbMgr.cs" />
+    <Compile Include="Models\djMsgData.cs" />
+    <Compile Include="Models\answerUnit.cs" />
+    <Compile Include="Models\questionData.cs" />
     <Compile Include="Models\response.cs" />
     <Compile Include="SignalR\serverData.cs" />
     <Compile Include="SignalR\ttmHub.cs" />

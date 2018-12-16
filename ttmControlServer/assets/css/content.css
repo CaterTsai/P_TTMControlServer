@@ -7,91 +7,118 @@ div.content {
 }
 
 /*#region DIV-LOGIN */
-div.loginGridContainer{
-    top:5%;
+div.loginGridContainer {
+    top: 5%;
     width: 70%;
-    height:80%;
-    display:grid;
+    height: 80%;
+    display: grid;
     grid-template-columns: 100%;
-    grid-template-rows:33.3% 33.3% 20% 14.4%;
-    text-align:center;
-    align-items:center;
+    grid-template-rows: 33.3% 33.3% 20% 14.4%;
+    text-align: center;
+    align-items: center;
 }
 /*#endregion */
 
 /*#region DIV-EXCEPT */
-div.exceptGridContainer{
-    top:10%;
+div.exceptGridContainer {
+    top: 8%;
     width: 85%;
-    height:80%;
-    display:grid;
+    height: 80%;
+    display: grid;
     grid-template-columns: 100%;
-    grid-template-rows:33.3% 33.3% 16.6% 16.6%;
-    text-align:center;
-    align-items:center;
+    grid-template-rows: 33.3% 33.3% 16.6% 16.6%;
+    text-align: center;
+    align-items: center;
 }
 /*#endregion */
 
 /*#region DIV-GAME */
-div.gameGridContainer{
+div.gameGridContainer {
     width: 100%;
-    height:98%;
-    display:grid;
+    height: 98%;
+    display: grid;
     grid-template-columns: 100%;
-    grid-template-rows:10% 5% 25% 6% 43% 6% 5%;
-    text-align:center;
-    align-items:center;
+    grid-template-rows: 12% 31% 6% 40% 6% 5%;
+    text-align: center;
+    align-items: center;
 }
 
-div.gameBackground{
-    background-color:#1a1a1a;
+div.gameBackground {
+    background-color: #1a1a1a;
 }
 
-div.miniBackground{
-    position:relative;
-    height:100%;
+div.miniBackground {
+    position: relative;
+    height: 100%;
 }
 
-div.ctrlDiv{
-    position:relative;
-    height:100%;
+div.ctrlDiv {
+    position: relative;
+    height: 100%;
 }
 
-div.ctrlGridContainer{
+div.ctrlGridContainer {
     width: 40%;
-    
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap:2%;
-    text-align:center;
-    align-items:center;
+    grid-gap: 2%;
+    text-align: center;
+    align-items: center;
 }
 
-div.ctrlGridDiv{
-    position:relative;
-    height:100%;
+div.ctrlGridDiv {
+    position: relative;
+    height: 100%;
 }
 /*#endregion */
 
 /*#region DIV-RESULT */
-div.resultGridContainer{
+div.resultGridContainer {
     width: 80%;
-    height:60%;
-    display:grid;
+    height: 60%;
+    display: grid;
     grid-template-columns: 100%;
-    grid-template-rows:15% 10% 10% 15% 15% 35%;
-    text-align:center;
-    align-items:center;
-    top:5%
+    grid-template-rows: 25% 25% 15% 35%;
+    text-align: center;
+    align-items: center;
+    top: 8%;
 }
 
-div.attentionDiv{
-    position:absolute;
-    width:100%;
-    height:30%;
-    bottom:0%;
-    background-color:#989898;
+div.discountGridItem {
+    position: relative;
+    height: 50%;
 }
+
+div.discountDiv {
+    display: table;
+    position: relative;
+    width: 70%;
+    height: 100%;
+}
+
+    div.discountDiv > div.discountCode {
+        display: table-cell;
+        background: #d9d9d9;
+        vertical-align: middle;
+        color:#30b0c3;
+    }
+
+    div.discountDiv > div.discountBtn {
+        display: table-cell;
+        background-color: #30b0c3;
+        vertical-align: middle;
+        color:white;
+    }
+
+div.attentionDiv {
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    bottom: 0%;
+    background-color: #989898;
+}
+
+
 
 /*#endregion */
 
@@ -104,29 +131,80 @@ img.background {
     width: 100%;
 }
 
-img.mini{
-    height:90%;
-}
-
-img.ctrlElement{
-    width:100%;
-    height:100%;
-}
-
-img.mark{
-    width:50%;
-
-}
-
-img.attentionImg{
-    
-    width:90%;
+/*#region IMG-OUTOFTIME */
+img.outOfTimeTitle{
+    width:70%;
 }
 /*#endregion */
 
+/*#region IMG-SORRY */
+img.sorryTitle{
+    width:75%;
+}
+
+img.sorryMsg{
+    width:45%;
+}
+/*#endregion */
+
+
+/*#region IMG-LOGIN */
+img.loginTitle {
+    width: 80%;
+}
+
+img.loginMsg {
+    width: 65%;
+}
+
+img.loginTips {
+    width: 65%;
+}
+/*#endregion */
+
+/*#region IMG-GAME */
+img.gameTitle {
+    width: 80%;
+}
+
+img.gameTips {
+    width: 50%;
+}
+
+img.mini {
+    height: 90%;
+}
+
+img.ctrlElement {
+    width: 100%;
+    height: 100%;
+}
+
+img.mark {
+    width: 50%;
+}
+
+/*#endregion */
+
+/*#region IMG-RESULT */
+
+img.resultTitle {
+    width: 90%;
+}
+
+img.resultTips {
+    width: 40%;
+}
+
+img.attentionImg {
+    width: 90%;
+}
+/*#endregion */
+
+/*#endregion */
 /*#region OTHER */
-canvas.miniCanvas{
-    height:100%;
+canvas.miniCanvas {
+    height: 100%;
 }
 /*#endregion */
 
@@ -139,24 +217,59 @@ canvas.miniCanvas{
 }
 
 @keyframes flickerAnimation {
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
-@-o-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+
+@-o-keyframes flickerAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
-@-moz-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+
+@-moz-keyframes flickerAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
-@-webkit-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+
+@-webkit-keyframes flickerAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 

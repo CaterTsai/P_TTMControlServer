@@ -6,6 +6,10 @@ var _gCounter;
 var _gCTX;
 var _gCtrlRect;
 
+var _gConnToServer = false;
+
+var _gClipboard;
+var _gDiscountCode = "";
 Number.prototype.pad = function (size) {
     var s = String(this);
     while (s.length < (size || 2)) { s = "0" + s; }
@@ -48,15 +52,21 @@ function toSGetQuestion() {
                     initCtrl(resp.index, resp.data);
                     setTimer(90);
                     $("#gameDiv").show();
+                    $("#loginDiv").hide();
                 }
                 else {
                     $("#sorryDiv").show();
+                    $("#loginDiv").hide();
                 }
             }
             else {
-                $("#outOfTimeDiv").show();
+                swal({
+                    title: "哎呀，偷跑了，要遵從主持人指示唷！",
+                    showConfirmButton: true,
+                    type: 'warning'
+                })
             }
-            $("#loginDiv").hide();
+           
         }
     );
 }
@@ -85,16 +95,18 @@ function toSSubmitAns(qIdx, answer) {
         data: { index: qIdx, ans: answer },
         dataType: "json",
     }).success(
-        function (data) {
-            data = JSON.parse(data);
-            if(data.result)
+        function (resp) {
+            resp = JSON.parse(resp);
+            if (resp.result)
             {
+                _gDiscountCode = resp.data;
+                $("#discountCode").text(resp.data);
                 $("#gameDiv").hide();
                 $("#resultDiv").show();
             }
             else
             {
-                console.log(data.result);
+                console.log(resp.result);
             }
         }
     );
@@ -102,8 +114,6 @@ function toSSubmitAns(qIdx, answer) {
 
 //--------------------------------------
 function loginSuccess(index) {
-    $("#loginDiv").hide();
-    $("#gameDiv").show();
     initMini(index);
 }
 
@@ -220,7 +230,7 @@ function onBtnHomePage2() {
 
     swal({
         title: "離開前，提醒您",
-        text: "【折扣碼】記得手機截圖。【現場禮物】別忘了領喔",
+        html: "【折扣碼】記得手機截圖<br>【現場禮物】別忘了領喔",
         showConfirmButton: true,
         showCancelButton: true
 
@@ -236,7 +246,17 @@ function onBtnInfo() {
 }
 
 function onBtnStart() {
-    toSGetQuestion();
+    if (_gConnToServer)
+    {
+        toSGetQuestion();
+    }
+    else
+    {
+        $("#gameDiv").show();
+        $("#loginDiv").hide();
+        loginSuccess(0);
+        
+    }
 }
 
 function onBtnCtrl(ctrlDiv) {
@@ -269,19 +289,34 @@ function onBtnSubmit() {
         }
     }
 
-    toSSubmitAns(_qQuestionID, answerStr);
+    if (_gConnToServer)
+    {
+        toSSubmitAns(_qQuestionID, answerStr);
+    }
+    else
+    {
+        _gDiscountCode = "TESTTESTTEST";
+        $("#discountCode").text(_gDiscountCode);
+        $("#gameDiv").hide();
+        $("#resultDiv").show();
+    }
+    
+}
+
+function onBtnCopy()
+{
+    swal("折扣碼已複製", "", "success");
 }
 
 function initCtrl(qIndex, question) {
 
-    console.log(question);
     fixQuestionOrder(question);
     $(".ctrlGridDiv").each(function (index) {
         var ctrl = $(".ctrlGridDiv > .ctrlElement")[index];
         if (qIndex % 2 == 0) {
             //Init Black(True)
             switchCtrl(ctrl);
-            if(!question[index])
+            if(question[index])
             {
                 var mark = $(".ctrlGridDiv > .mark")[index];
                 $(mark).hide();
@@ -330,9 +365,26 @@ function get(name) {
         return decodeURIComponent(name[1]);
 }
 
+function initCopy() {
+    _gClipboard = new ClipboardJS('.copy-button', {
+        text: function () {
+            return _gDiscountCode;
+        }
+    });
+}
+
 window.onload = function () {
     getUrlParameter();
+    initCopy();
     //initFooterCtrl();
 
-    toSCheckServer();
+    if (_gConnToServer)
+    {
+        toSCheckServer();
+    }
+    else
+    {
+        $("#loginDiv").show();
+    }
+    
 }

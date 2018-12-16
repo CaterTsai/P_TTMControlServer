@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
+using System.Web.Hosting;
 
 namespace ttmControlServer.SignalR
 {
@@ -38,15 +42,23 @@ namespace ttmControlServer.SignalR
 
         private void loadIdleMsg()
         {
-            _idleMsgMgr.Add(new idleMsgData(0, "測試待機1"));
-            _idleMsgMgr.Add(new idleMsgData(1, "測試待機2"));
-            _idleMsgMgr.Add(new idleMsgData(2, "測試待機3"));
-            _idleMsgMgr.Add(new idleMsgData(3, "測試待機4"));
+            using (StreamReader sr = new StreamReader(HostingEnvironment.MapPath("~/assets/idleMsg.json")))
+            {
+                _idleMsgMgr = JsonConvert.DeserializeObject<List<idleMsgData>>(sr.ReadToEnd());
+            }
+
+            _idleMsgMgr.Add(new idleMsgData(4, "測試"));
+
         }
-        
+
         private void saveIdleMsg()
         {
-
+            string jsonStr = JsonConvert.SerializeObject(_idleMsgMgr);
+            using (StreamWriter sw = new StreamWriter(HostingEnvironment.MapPath("~/assets/idleMsg.json"), false, Encoding.UTF8))
+            {
+                sw.WriteLine(jsonStr);
+                sw.Close();
+            }
         }
 
         public void updateIdleMsg(ref List<idleMsgData> newList)
@@ -65,7 +77,7 @@ namespace ttmControlServer.SignalR
             {
                 return "";
             }
-            
+
             var idleMsg = _idleMsgMgr[idleIndex].msg;
             idleIndex = (idleIndex + 1) % _idleMsgMgr.Count;
 

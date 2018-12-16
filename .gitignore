@@ -10,3 +10,6 @@
 /ttmControlServer/Web.config
 /ttmControlServer/Web.Debug.config
 /ttmControlServer/Web.Release.config
+/ttmControlServer/assets/idleMsg.json
+/ttmControlServer/obj/Release
+/ttmControlServer.zip

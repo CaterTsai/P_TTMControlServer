@@ -9,15 +9,26 @@
     設定模式：<input id="mode" type="number" max="1" min="0"><button onclick="onBtnSetMode()">送出</button><br />
     <hr />
     DJ問候：<input id="greeting"/><button onclick="onBtnDJGreeting()">送出</button><br />
-    DJ訊息：<input id="message" /><button onclick="onBtnDJMessage()">送出</button><br />
+    DJ訊息：<input id="message" /><input id="finish" type="number" min="0" max="2" value="0"><button onclick="onBtnDJMessage()">送出</button><br />
+    DJ取消：<button onclick="onBtnDJCancal()">送出</button><br />
     <hr />
-    問題：<input id="question" type="number" max="10" min="0"><button onclick="onBtnSetQuestion()">送出</button><br />
-    答題：<input id="ansId" type="number" max="47" min="0"><button onclick="onBtnAns()">送出</button><br />
-    公佈：<button onclick="onBtnSolution()">送出</button><br>
-    號碼：<input id="code" /><button onclick="onBtnCode()">送出</button><br />
+    待機棋盤：<button onclick="onBtnCheckboard()">送出</button><br />
+    待機全白：<button onclick="onBtnAllWhite()">送出</button><br />
+    
+    <hr />
+    互動網頁啟動：<button onclick="onBtnEventStart()">送出</button><br />
+    互動網頁啟動關閉：<button onclick="onBtnEventStop()">送出</button><br />
+    <hr />
 
+    問題倒數：<button onclick="onBtnQuestionStart()">送出</button><br />
+    問題編號：<input id="question" type="number" max="4" min="0">
+    設定問題：<button onclick="onBtnSetQuestion()">送出</button><br />
+    公佈答案：<button onclick="onBtnSolution()">送出</button><br><br>
 
+    <hr />
+    快閃碼：<input id="code" /><button onclick="onBtnCode()">送出</button><br />
 
+    
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="Scripts/jquery.signalR-2.4.0.min.js"></script>
     <script src="signalr/hubs"></script>

@@ -4,18 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
+using ttmControlServer.Models;
+using Newtonsoft.Json;
 
 namespace ttmControlServer.SignalR
 {
     public class ttmHub : Hub
     {
+        public enum interactiveState
+        {
+            sidle = 0,
+
+            sInteractiveCountdown,
+            sInteractiveStart,
+            sInteractiveResult
+        }
+        const int _cFinishNum = 2;
         public static int _mode = 0; //0:idle + DJ, 1:interactive
+        public static interactiveState _state = interactiveState.sidle;
         public static string _hostID = "";
         public static string _backendID = "";
 
         public static serverData _serverData = new serverData();
-
-
+        
         public ttmHub()
         {
             if(!_serverData.isInit)
@@ -55,30 +66,42 @@ namespace ttmControlServer.SignalR
         #endregion
 
         #region Backend
-        public void registerBackend()
+        public string registerBackend()
         {
             _backendID = Context.ConnectionId;
-            
+            response r = new response();
+            r.active = "registerBackend";
+            r.result = true;
+            r.data = _mode;
+            var repJson = JsonConvert.SerializeObject(r);
+            return repJson;
         }
 
-        public void setMode(int mode)
+        public string setMode(int mode)
         {
-            if(_backendID != Context.ConnectionId)
+            response r = new response();
+            r.active = "setMode";
+            if (_backendID != Context.ConnectionId || _hostID == "")
             {
-                return;
+                r.result = false;
+                r.msg = "Wrong connection Id";
             }
-            if(mode != 0 && mode != 1)
+            else if(mode != 0 && mode != 1)
             {
-                return;
+                r.result = false;
+                r.msg = "Wrong Mode";
             }
-            _mode = mode;
-            if(_hostID != "")
+            else
             {
+                _mode = mode;
                 Clients.Client(_hostID).setMode(_mode);
+                r.result = true;
             }
+
+            var repJson = JsonConvert.SerializeObject(r);
+            return repJson;
         }
-
-
+        
         #region DJ Mode
         public void setDJGreetingMsg(string msg)
         {
@@ -93,7 +116,7 @@ namespace ttmControlServer.SignalR
             }
         }
 
-        public void setDJMsg(string msg)
+        public void setDJMsg(string msg, int finishId)
         {
             if (_backendID != Context.ConnectionId)
             {
@@ -102,7 +125,21 @@ namespace ttmControlServer.SignalR
 
             if (_hostID != "")
             {
-                Clients.Client(_hostID).setDJMsg(msg);
+                var fid = Math.Min(Math.Max(finishId, 0), _cFinishNum);                
+                Clients.Client(_hostID).setDJMsg(msg, fid);
+            }
+        }
+        
+        public void setDJCancal()
+        {
+            if (_backendID != Context.ConnectionId)
+            {
+                return;
+            }
+
+            if (_hostID != "")
+            {
+                Clients.Client(_hostID).setDJCancal();
             }
         }
 
@@ -113,7 +150,7 @@ namespace ttmControlServer.SignalR
         #endregion
 
         #region Interactive Mode
-        public void setQuestion(int idx)
+        public void setCheckerBoard()
         {
             if (_backendID != Context.ConnectionId)
             {
@@ -122,7 +159,34 @@ namespace ttmControlServer.SignalR
 
             if (_hostID != "")
             {
-                Clients.Client(_hostID).setQuestion(idx);
+                Clients.Client(_hostID).setCheckerBoard();
+            }
+        }
+
+        public void setAllWhite()
+        {
+            if (_backendID != Context.ConnectionId)
+            {
+                return;
+            }
+
+            if (_hostID != "")
+            {
+                Clients.Client(_hostID).setAllWhite();
+            }
+        }
+
+        public void readyQuestion()
+        {
+            if (_backendID != Context.ConnectionId)
+            {
+                return;
+            }
+
+            if (_hostID != "")
+            {
+                Clients.Client(_hostID).readyQuestion();
+                _state = interactiveState.sInteractiveCountdown;
             }
         }
 
@@ -139,7 +203,7 @@ namespace ttmControlServer.SignalR
             }
         }
 
-        public void showAnswer()
+        public void showAnswer(int qid)
         {
             if (_backendID != Context.ConnectionId)
             {
@@ -148,7 +212,7 @@ namespace ttmControlServer.SignalR
 
             if (_hostID != "")
             {
-                Clients.Client(_hostID).showAnswer();
+                Clients.Client(_hostID).showAnswer(qid);
             }
         }
 
