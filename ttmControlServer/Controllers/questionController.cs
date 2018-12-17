@@ -193,6 +193,25 @@ namespace ttmControlServer.Controllers
 
         #region Backend
         [HttpGet]
+        [Route("api/question/login")]
+        public string login(string code)
+        {
+            response rep = new response();
+            rep.active = "question/login/";
+            if (code == System.Web.Configuration.WebConfigurationManager.AppSettings["code"])
+            {   
+                rep.result = true;
+            }
+            else
+            {
+                rep.msg = "Wrong Code";
+                rep.result = false;
+            }
+            var repJson = JsonConvert.SerializeObject(rep);
+            return repJson;
+        }
+
+        [HttpGet]
         [Route("api/question/start")]
         public string start(string code)
         {
@@ -261,11 +280,11 @@ namespace ttmControlServer.Controllers
         }
 
         [HttpGet]
-        [Route("api/question/showAns")]
-        public string showAns(string code)
+        [Route("api/question/clearAns")]
+        public string clearAns(string code)
         {
             response rep = new response();
-            rep.active = "question/showAns/";
+            rep.active = "question/clearAns/";
             if (code == System.Web.Configuration.WebConfigurationManager.AppSettings["code"])
             {
                 answerId = -1;

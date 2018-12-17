@@ -34,22 +34,25 @@ namespace ttmControlServer.SignalR
                 _serverData.init();
             }
         }
-        
+
         #region Override
         public override Task OnDisconnected(bool stopCalled)
         {
             if(Context.ConnectionId == _hostID)
             {
                 _hostID = "";
+                Clients.All.hostIsDisconnected();
             }
             return base.OnDisconnected(stopCalled);
         }
         #endregion
 
         #region Unity Host
-        public void registerHost()
+        public int registerHost()
         {
             _hostID = Context.ConnectionId;
+            Clients.All.hostIsConnected();
+            return _mode;
         }
 
         public string getNextIdleMsg()
@@ -62,6 +65,15 @@ namespace ttmControlServer.SignalR
             return _serverData.getNextIdleMsg();
         }
 
+        public string heartBeat()
+        {
+            if (_hostID != Context.ConnectionId)
+            {
+                return "";
+            }
+
+            return string.Format("HearBeat@{0:mm:ss}", DateTime.Now);
+        }
 
         #endregion
 
@@ -72,7 +84,8 @@ namespace ttmControlServer.SignalR
             response r = new response();
             r.active = "registerBackend";
             r.result = true;
-            r.data = _mode;
+            r.index = _mode;
+            r.data = _hostID;
             var repJson = JsonConvert.SerializeObject(r);
             return repJson;
         }
@@ -143,9 +156,37 @@ namespace ttmControlServer.SignalR
             }
         }
 
+        public string getIdleMsg()
+        {
+            response r = new response();
+            r.data = _serverData.getAllIdleMsg();
+            r.result = true;
+            var repJson = JsonConvert.SerializeObject(r);
+            return repJson;
+        }
+
         public void updateIdleMsg(string msgSet)
         {
+            List<serverData.idleMsgData> idleList = JsonConvert.DeserializeObject<List<serverData.idleMsgData>>(msgSet);
+            _serverData.updateIdleMsg(ref idleList);
+        }
 
+        public string getDJType()
+        {
+            response r = new response();
+            r.data = _serverData.getDJType();
+            r.result = true;
+            var repJson = JsonConvert.SerializeObject(r);
+            return repJson;
+        }
+
+        public string getDJMsg()
+        {
+            response r = new response();
+            r.data = _serverData.getAllDJMsg();
+            r.result = true;
+            var repJson = JsonConvert.SerializeObject(r);
+            return repJson;
         }
         #endregion
 

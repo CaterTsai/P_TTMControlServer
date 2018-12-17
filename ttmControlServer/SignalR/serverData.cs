@@ -23,10 +23,20 @@ namespace ttmControlServer.SignalR
             public string msg { get; set; }
         }
 
+        public class djMsgData
+        {
+            public int id { get; set; }
+            public int count { get; set; }
+            public int type { get; set; }
+            public string msg { get; set; }
+        }
+
         public bool isInit { get; set; }
         public int idleIndex { get; set; }
 
         private List<idleMsgData> _idleMsgMgr = new List<idleMsgData>();
+        private Dictionary<int, string> _djMsgType = new Dictionary<int, string>();
+        private List<djMsgData> _djMsgData = new List<djMsgData>();
 
         public serverData()
         {
@@ -36,8 +46,36 @@ namespace ttmControlServer.SignalR
 
         public void init()
         {
+            loadDJType();
+            loadDJMsg();
             loadIdleMsg();
             isInit = true;
+        }
+
+        private void loadDJType()
+        {
+            using (StreamReader sr = new StreamReader(HostingEnvironment.MapPath("~/assets/djMsgType.json")))
+            {
+                _djMsgType = JsonConvert.DeserializeObject<Dictionary<int, string>>(sr.ReadToEnd());
+            }
+        }
+
+        public Dictionary<int, string> getDJType()
+        {
+            return _djMsgType;
+        }
+
+        private void loadDJMsg()
+        {
+            using (StreamReader sr = new StreamReader(HostingEnvironment.MapPath("~/assets/djMsg.json")))
+            {
+                _djMsgData = JsonConvert.DeserializeObject<List<djMsgData>>(sr.ReadToEnd());
+            }
+        }
+
+        public List<djMsgData> getAllDJMsg()
+        {
+            return _djMsgData;
         }
 
         private void loadIdleMsg()
@@ -46,9 +84,6 @@ namespace ttmControlServer.SignalR
             {
                 _idleMsgMgr = JsonConvert.DeserializeObject<List<idleMsgData>>(sr.ReadToEnd());
             }
-
-            _idleMsgMgr.Add(new idleMsgData(4, "測試"));
-
         }
 
         private void saveIdleMsg()
@@ -63,7 +98,9 @@ namespace ttmControlServer.SignalR
 
         public void updateIdleMsg(ref List<idleMsgData> newList)
         {
-
+            _idleMsgMgr.Clear();
+            _idleMsgMgr = newList.ToList();
+            saveIdleMsg();
         }
 
         public List<idleMsgData> getAllIdleMsg()

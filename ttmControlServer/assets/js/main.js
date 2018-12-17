@@ -47,12 +47,13 @@ function toSGetQuestion() {
             if (resp.result) {
                 if (resp.index != -1) {
 
+                    $("#gameDiv").show();
+                    $("#loginDiv").hide();
                     _qQuestionID = resp.index;
                     loginSuccess(resp.index);
                     initCtrl(resp.index, resp.data);
                     setTimer(90);
-                    $("#gameDiv").show();
-                    $("#loginDiv").hide();
+                    
                 }
                 else {
                     $("#sorryDiv").show();
@@ -108,6 +109,7 @@ function toSSubmitAns(qIdx, answer) {
             {
                 console.log(resp.result);
             }
+            clearInterval(_gTimer);
         }
     );
 }
@@ -325,7 +327,7 @@ function initCtrl(qIndex, question) {
         else
         {
             //Init White(False)
-            if(question[index])
+            if(!question[index])
             {
                 var mark = $(".ctrlGridDiv > .mark")[index];
                 $(mark).hide();

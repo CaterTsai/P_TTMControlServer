@@ -38,7 +38,7 @@ div.gameGridContainer {
     height: 98%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 12% 31% 6% 40% 6% 5%;
+    grid-template-rows: 12% 26% 6% 45% 6% 5%;
     text-align: center;
     align-items: center;
 }
@@ -58,7 +58,7 @@ div.ctrlDiv {
 }
 
 div.ctrlGridContainer {
-    width: 40%;
+    width: 38%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 2%;
@@ -177,7 +177,6 @@ img.mini {
 
 img.ctrlElement {
     width: 100%;
-    height: 100%;
 }
 
 img.mark {

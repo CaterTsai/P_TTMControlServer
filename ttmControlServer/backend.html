@@ -1,34 +1,168 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="assets/css/backend.css" />
 </head>
 <body>
-    設定模式：<input id="mode" type="number" max="1" min="0"><button onclick="onBtnSetMode()">送出</button><br />
+    <div id="modeDiv">
+        <label for="mode">設定模式</label>
+        <select id="mode" onchange="onModeChange()">
+            <option value="0">DJ模式</option>
+            <option value="1">互動模式</option>
+        </select><br />
+        <label for="hostState">主機狀態：</label>
+        <span id="hostState" class="offline">未連線</span>
+    </div>
     <hr />
-    DJ問候：<input id="greeting"/><button onclick="onBtnDJGreeting()">送出</button><br />
-    DJ訊息：<input id="message" /><input id="finish" type="number" min="0" max="2" value="0"><button onclick="onBtnDJMessage()">送出</button><br />
-    DJ取消：<button onclick="onBtnDJCancal()">送出</button><br />
-    <hr />
-    待機棋盤：<button onclick="onBtnCheckboard()">送出</button><br />
-    待機全白：<button onclick="onBtnAllWhite()">送出</button><br />
-    
-    <hr />
-    互動網頁啟動：<button onclick="onBtnEventStart()">送出</button><br />
-    互動網頁啟動關閉：<button onclick="onBtnEventStop()">送出</button><br />
-    <hr />
+    <div id="djModeDiv" class="content" style="display:none">
+        <div id="selectMode">
+            <h1>DJ操作</h1>
+            <div id="greetingDiv">
+                <h2>DJ問候</h2>
+                Hi！<input id="greeting" type="text"/><br />
+                <button id="btnGreeting" onclick="onBtnDJGreeting()">送出</button><br />
+            </div><br />
+            <div id="messageDiv">
+                <h2>DJ訊息</h2>
+                <label for="msgType">類型：</label>
+                <select id="msgType" onchange="onMsgTypeSelect()">
+                    <option disabled selected value="-1"> 請選擇 </option>
+                </select><br />
+                <label for="msgSelect">訊息：</label>
+                <select id="msgSelect"></select><br />
+                <label for="finish">結尾：</label>
+                <select id="finish">
+                    <option value="0" selected>結尾1</option>
+                    <option value="1">結尾2</option>
+                    <option value="2">結尾3</option>
+                    <option value="3">結尾4</option>
+                    <option value="4">結尾5</option>
+                </select><br />
+                <button id="btnMessage" onclick="onBtnDJMessage()" disabled>送出訊息</button>
+                <button id="btnCancal" onclick="onBtnDJCancal()"  disabled>取消</button>
+                <hr />
+            </div>
+        </div>
+        <div id="freeMode" style="display:none">
+            <h1>DJ自由操作</h1>
+            <div>
+                <h2>DJ問候</h2>
+                <input id="greetingFree" type="text"/><br />
+                <button onclick="onBtnDJGreetingFree()">送出</button><br />
+            </div>
+            <h2>DJ訊息(自由輸入)</h2>
+            <label for="message">訊息：</label>
+            <input id="messageFree" type="text"/><br />
+            <label for="finish">結尾：</label>
+            <select id="finish">
+                <option value="0" selected>結尾1</option>
+                <option value="1">結尾2</option>
+                <option value="2">結尾3</option>
+                <option value="3">結尾4</option>
+                <option value="4">結尾5</option>
+            </select><br />
+            <button onclick="onBtnDJMessageFree()">送出訊息</button><button onclick="onBtnDJCancal()">取消</button>
+            <hr />
+        </div>
+        <div class="idleMsgDiv">
+            <h1>待機設定</h1>
+            <div class="idleTextContainer">
+                <div>
+                    <label>01：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>02：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>03：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>04：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>05：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>06：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>07：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>08：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>09：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+                <div>
+                    <label>10：</label>
+                    <input class="idleText" type="text" value="" />
+                </div>
+            </div>
+            <button onclick="onBtnIdleUpdate()">更新</button>
+        </div>
+    </div>
 
-    問題倒數：<button onclick="onBtnQuestionStart()">送出</button><br />
-    問題編號：<input id="question" type="number" max="4" min="0">
-    設定問題：<button onclick="onBtnSetQuestion()">送出</button><br />
-    公佈答案：<button onclick="onBtnSolution()">送出</button><br><br>
+    <div id="interactiveModeDiv" class="content" style="display:none">
+        <h1>互動模式</h1>
+        <div>
+            <h2>網站控制</h2>
+            <button id="btnStartWeb" onclick="onBtnEventStart()">開放網頁</button>
+            <button id="btnStopWeb" onclick="onBtnEventStop()">關閉網頁</button>
+        </div>
+        <div>
+            <h2 id="state1">步驟一</h2>
+            <button id="btn1" onclick="onBtnCheckboard()" disabled>顯示互動待機(棋盤)</button><br />
+        </div>
+        <div>
+            <h2 id="state2">步驟二</h2>
+            <button id="btn2" onclick="onBtnQuestionStart()" disabled>啟動倒數(10秒)</button><br />
+        </div>
+        <div>
+            <h2 id="state3">步驟三</h2>
+            <label for="question">問題選擇：</label>
+            <select id="question" disabled>
+                <option value="0">通用-Hi 提提研</option>
+                <option value="1">12/23-X’MAS</option>
+                <option value="2">12/23-雪人</option>
+                <option value="3">12/30-Happy New 2019</option>
+                <option value="4">12/30-Hello 2019</option>
+            </select>
+            <button id="btn3" onclick="onBtnSetQuestion()" disabled>送出問題</button><br />
+        </div>
+        <div>
+            <h2 id="state4">步驟四</h2>
+            <button id="btn4" onclick="onBtnSolution()" disabled>揭曉答案</button><br><br>
+        </div>
 
-    <hr />
-    快閃碼：<input id="code" /><button onclick="onBtnCode()">送出</button><br />
 
-    
+        <hr />
+        <div>
+            <h1>快閃碼模式</h1>
+            <h2>步驟一</h2>
+            <button id="btnAllWhite" onclick="onBtnAllWhite()">顯示快閃待機(全白)</button><br />
+            <h2>步驟二</h2>
+            <label for="code">快閃碼</label>
+            <input id="code" /><br />
+            <label for="codeTime">快閃碼顯示時間</label>
+            <input id="codeTime" type="number" value="5" min="1" max="10" />
+            <button id="btnSendCode" onclick="onBtnCode()" disabled>送出</button><br />
+        </div>
+
+    </div>
+
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="Scripts/jquery.signalR-2.4.0.min.js"></script>
     <script src="signalr/hubs"></script>

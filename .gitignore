@@ -13,3 +13,4 @@
 /ttmControlServer/assets/idleMsg.json
 /ttmControlServer/obj/Release
 /ttmControlServer.zip
+*.json
