@@ -122,7 +122,6 @@ div.attentionDiv {
 
 /*#endregion */
 
-
 /*#endregion */
 /*#region IMG */
 img.background {
@@ -209,10 +208,10 @@ canvas.miniCanvas {
 
 /*#region ANIMATION */
 .animate-flicker {
-    -webkit-animation: flickerAnimation 3s infinite;
-    -moz-animation: flickerAnimation 3s infinite;
-    -o-animation: flickerAnimation 3s infinite;
-    animation: flickerAnimation 3s infinite;
+    -webkit-animation: flickerAnimation 2s infinite;
+    -moz-animation: flickerAnimation 2s infinite;
+    -o-animation: flickerAnimation 2s infinite;
+    animation: flickerAnimation 2s infinite;
 }
 
 @keyframes flickerAnimation {
@@ -221,7 +220,7 @@ canvas.miniCanvas {
     }
 
     50% {
-        opacity: 0;
+        opacity: 0.2;
     }
 
     100% {
@@ -235,7 +234,7 @@ canvas.miniCanvas {
     }
 
     50% {
-        opacity: 0;
+        opacity: 0.2;
     }
 
     100% {
@@ -249,7 +248,7 @@ canvas.miniCanvas {
     }
 
     50% {
-        opacity: 0;
+        opacity: 0.2;
     }
 
     100% {
@@ -263,7 +262,7 @@ canvas.miniCanvas {
     }
 
     50% {
-        opacity: 0;
+        opacity: 0.2;
     }
 
     100% {

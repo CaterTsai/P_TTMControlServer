@@ -154,8 +154,12 @@
             <h2>步驟一</h2>
             <button id="btnAllWhite" onclick="onBtnAllWhite()">顯示快閃待機(全白)</button><br />
             <h2>步驟二</h2>
-            <label for="code">快閃碼</label>
-            <input id="code" /><br />
+            <label for="codeId">快閃碼</label>
+            <select id="codeId">
+                <option value="0">HITTM</option>
+                <option value="1">TTMAS</option>
+                <option value="2">TTM19</option>
+            </select>
             <label for="codeTime">快閃碼顯示時間</label>
             <input id="codeTime" type="number" value="5" min="1" max="10" />
             <button id="btnSendCode" onclick="onBtnCode()" disabled>送出</button><br />

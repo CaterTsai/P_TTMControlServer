@@ -257,7 +257,7 @@ namespace ttmControlServer.SignalR
             }
         }
 
-        public void showCode(string code, float t)
+        public void showCode(int codeId, float t)
         {
             if (_backendID != Context.ConnectionId)
             {
@@ -266,7 +266,7 @@ namespace ttmControlServer.SignalR
 
             if (_hostID != "")
             {
-                Clients.Client(_hostID).showCode(code, t);
+                Clients.Client(_hostID).showCode(codeId, t);
             }
         }
         #endregion

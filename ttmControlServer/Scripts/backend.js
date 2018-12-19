@@ -471,10 +471,10 @@ function onBtnAllWhite() {
 }
 
 function onBtnCode() {
-    var code = $("#code").val();
+    var codeId = parseInt($("#codeId").val());
     var time = $("#codeTime").val();
     if (_ttmHub != null && _gIsHostConnection) {
-        _ttmHub.server.showCode(code, time).done(
+        _ttmHub.server.showCode(codeId, time).done(
             function () {
                 alert("快閃碼送出");
                 $("#btn1").prop("disabled", false);
