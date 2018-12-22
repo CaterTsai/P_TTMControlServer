@@ -1,12 +1,11 @@
 ﻿var _qQuestionID = -1;
-var _gIsClick = false;
+var _gIsSubmit = false;
 var _gHammer = false
 var _gTimer;
 var _gCounter;
 var _gCTX;
 var _gCtrlRect;
-
-var _gConnToServer = false;
+var _gConnToServer = true;
 
 var _gClipboard;
 var _gDiscountCode = "";
@@ -101,9 +100,7 @@ function toSSubmitAns(qIdx, answer) {
             if (resp.result)
             {
                 _gDiscountCode = resp.data;
-                $("#discountCode").text(resp.data);
-                $("#gameDiv").hide();
-                $("#resultDiv").show();
+                afterSumbit();
             }
             else
             {
@@ -223,6 +220,22 @@ function setTimer(seconds)
         }
     }, 1000);
 }
+
+function afterSumbit()
+{
+    $("#btnSubmit").hide();
+    $("#secondsText").hide();
+    $("#popoutDiv").show();
+
+    $("#discountCode").text(_gDiscountCode);
+
+    $(".mark").each(function (index) {
+        var mark = $(".ctrlGridDiv > .mark")[index];
+        $(mark).hide();
+    });
+
+    _gIsSubmit = true;
+}
 //--------------------------------------
 function onBtnHomePage() {
     window.location = "https://www.ttmask.com/";
@@ -244,7 +257,7 @@ function onBtnHomePage2() {
 }
 
 function onBtnInfo() {
-    window.location = "https://www.ttmask.com/";
+    window.location = "https://www.facebook.com/ttmasktaiwan";
 }
 
 function onBtnStart() {
@@ -262,8 +275,11 @@ function onBtnStart() {
 }
 
 function onBtnCtrl(ctrlDiv) {
-    var ctrl = $(ctrlDiv).find(".ctrlElement")[0];
-    switchCtrl(ctrl);
+    if (!_gIsSubmit)
+    {
+        var ctrl = $(ctrlDiv).find(".ctrlElement")[0];
+        switchCtrl(ctrl);
+    }
 }
 
 function onBtnSubmit() {
@@ -298,9 +314,9 @@ function onBtnSubmit() {
     else
     {
         _gDiscountCode = "TESTTESTTEST";
-        $("#discountCode").text(_gDiscountCode);
-        $("#gameDiv").hide();
-        $("#resultDiv").show();
+        
+        afterSumbit();
+
     }
     
 }
@@ -308,6 +324,20 @@ function onBtnSubmit() {
 function onBtnCopy()
 {
     swal("折扣碼已複製", "", "success");
+}
+
+function onBtnClose() {
+    swal({
+        title: "離開前，提醒您",
+        html: "【折扣碼】記得手機截圖<br>【現場禮物】別忘了領喔",
+        showConfirmButton: true,
+        showCancelButton: true
+
+    }).then(function (result) {
+        if (result.dismiss != "cancel") {
+            $("#popoutDiv").hide();
+        }
+    });
 }
 
 function initCtrl(qIndex, question) {
@@ -376,7 +406,6 @@ function initCopy() {
 }
 
 window.onload = function () {
-    getUrlParameter();
     initCopy();
     //initFooterCtrl();
 

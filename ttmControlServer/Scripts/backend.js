@@ -81,6 +81,20 @@ function clearAns() {
     }
 }
 
+function setLog(msg, t, mId)
+{
+    if (_gMode == 0) {
+        $.ajax({
+            url: "api/question/log",
+            type: "get",
+            data: { code: _gCode, hello: msg, type: t, msgIdx: mId },
+        }).success(
+        function (data) {
+            console.log(data);
+        });
+    }
+}
+
 //---------------------------------
 //SignalR
 function connection() {
@@ -249,9 +263,6 @@ function nextStep() {
         $("#state" + _gInteractiveState).removeClass("stateNow");
         $("#btn" + _gInteractiveState).prop("disabled", true);
 
-        if (_gInteractiveState == 3) {
-            $("#question").prop("disabled", true);
-        }
 
         _gInteractiveState++;
         if (_gInteractiveState > 4) {
@@ -262,9 +273,6 @@ function nextStep() {
 
         $("#state" + _gInteractiveState).addClass("stateNow");
         $("#btn" + _gInteractiveState).prop("disabled", false);
-        if (_gInteractiveState == 3) {
-            $("#question").prop("disabled", false);
-        }
     }
 }
 
@@ -297,7 +305,7 @@ function onBtnDJGreeting() {
         alert("不要亂按");
         return;
     }
-    var greeting = "Hi！" + msg;
+    var greeting = "Hi " + msg;
 
     if (_ttmHub != null && _gIsHostConnection) {
         _ttmHub.server.setDJGreetingMsg(greeting).done(
@@ -330,7 +338,7 @@ function onMsgTypeSelect()
 
 function onBtnDJMessage()
 {
-    var message = $("#msgSelect").text();
+    var message = $("#msgSelect option:selected").text()
     var fid = $("#finish").val();
     if (_ttmHub != null && _gIsHostConnection) {
         _ttmHub.server.setDJMsg(message, fid).done(
@@ -342,11 +350,15 @@ function onBtnDJMessage()
             });
     }
 
+    var msg = $("#greeting").val();
     var id = $("#msgSelect").val();
     var type = $("#msgType").val();
     addCountMsg(type, parseInt(id));
     clearDJMsg();
     $("#msgType").val('-1');
+
+    
+    setLog(msg, type, id);
 }
 
 function onBtnDJMessageFree() {
@@ -494,6 +506,12 @@ function getUrlParameter() {
         _gCode = code;
     }
     
+    var mode = get("mode");
+    if(mode != null && mode == "free")
+    {
+        $("#freeMode").show();
+        $("#selectMode").hide();
+    }
 
 }
 
@@ -504,12 +522,12 @@ function get(name) {
 
 window.onload = function () {
     getUrlParameter();
-    //login();
+    login();
 }
 
 $(function () {
     _ttmHub = $.connection.ttmHub;
     _ttmHub.client.hostIsDisconnected = onHostDisconnection;
     _ttmHub.client.hostIsConnected = onHostConnection;
-    connection();
+    //connection();
 });

@@ -15,14 +15,15 @@
         </select><br />
         <label for="hostState">主機狀態：</label>
         <span id="hostState" class="offline">未連線</span>
+        <hr />
     </div>
-    <hr />
+    
     <div id="djModeDiv" class="content" style="display:none">
         <div id="selectMode">
             <h1>DJ操作</h1>
             <div id="greetingDiv">
                 <h2>DJ問候</h2>
-                Hi！<input id="greeting" type="text"/><br />
+                Hi <input id="greeting" type="text"/><br />
                 <button id="btnGreeting" onclick="onBtnDJGreeting()">送出</button><br />
             </div><br />
             <div id="messageDiv">
@@ -128,12 +129,12 @@
         </div>
         <div>
             <h2 id="state2">步驟二</h2>
-            <button id="btn2" onclick="onBtnQuestionStart()" disabled>啟動倒數(10秒)</button><br />
+            <button id="btn2" onclick="onBtnQuestionStart()" disabled>啟動倒數(5秒)</button><br />
         </div>
         <div>
             <h2 id="state3">步驟三</h2>
             <label for="question">問題選擇：</label>
-            <select id="question" disabled>
+            <select id="question">
                 <option value="0">通用-Hi 提提研</option>
                 <option value="1">12/23-X’MAS</option>
                 <option value="2">12/23-雪人</option>

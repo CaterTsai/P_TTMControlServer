@@ -21,9 +21,10 @@ namespace ttmControlServer.Controllers
         static bool startEvent = false;
         static int answerId = -1;
         private dbMgr _dbMgr = new dbMgr();
+        
 
         public questionController()
-        {   
+        {
             if (answerSet == null)
             {
                 answerSet = new answerUnit[answerNum];
@@ -65,9 +66,20 @@ namespace ttmControlServer.Controllers
                         break;
                     }
                 }
+
                 rep.result = true;
-                rep.data = answerSet[index].answer;
-                rep.index = index;
+                if (index != -1)
+                {
+                    
+                    rep.data = answerSet[index].answer;
+                    rep.index = index;
+                }
+                else
+                {
+                    rep.result = true;
+                    rep.index = -1;
+                    rep.msg = "sorry";
+                }
             }
             else
             {
@@ -288,6 +300,27 @@ namespace ttmControlServer.Controllers
             if (code == System.Web.Configuration.WebConfigurationManager.AppSettings["code"])
             {
                 answerId = -1;
+                rep.result = true;
+            }
+            else
+            {
+                rep.msg = "Wrong Code";
+                rep.result = false;
+            }
+            var repJson = JsonConvert.SerializeObject(rep);
+            return repJson;
+        }
+
+        [HttpGet]
+        [Route("api/question/log")]
+        public string log(string code, string hello, int type, int msgIdx)
+        {
+            response rep = new response();
+            rep.active = "question/log/";
+            if (code == System.Web.Configuration.WebConfigurationManager.AppSettings["code"])
+            {
+                _dbMgr.connDB();
+                _dbMgr.setLog(hello, type, msgIdx);
                 rep.result = true;
             }
             else

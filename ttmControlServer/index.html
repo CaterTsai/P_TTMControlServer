@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="assets/css/header.css" />
     <link rel="stylesheet" href="assets/css/footer.css" />
     <link rel="stylesheet" href="assets/css/content.css" />
+    <link rel="stylesheet" href="assets/css/popout.css" />
 </head>
 <body>
     <div class="header">
@@ -148,14 +149,32 @@
                     </div>
                 </div>
                 <div>
-                    <img class="imgBtnSmall" src="assets/img/btnSubmit.png" onclick="onBtnSubmit()" />
+                    <img id="btnSubmit" class="imgBtnSmall" src="assets/img/btnSubmit.png" onclick="onBtnSubmit()" />
                 </div>
                 <div>
                     <h4 id="secondsText">倒數90秒</h4>
                 </div>
             </div>
         </div>
-        <div id="resultDiv" class="fullWrapper" style="display:none">
+    </div>    
+    <div id="footer" class="footer">
+        <!--<div class="footerCtrlDiv">
+            <div class="footerCtrl centerWrapper"></div>
+        </div>-->
+        <div class="socialDiv">
+            <div class="socialGridContainer centerWrapper">
+                <div><a href="https://www.facebook.com/ttmasktaiwan" target="_blank"><img src="assets/img/btnFB.png" class="socialBtn" onclick="on" /></a></div>
+                <div><a href="https://page.line.me/ttmask" target="_blank"><img src="assets/img/btnLine.png" class="socialBtn" /></a></div>
+                <div><a href="https://www.instagram.com/ttm_tw/" target="_blank"><img src="assets/img/btnIG.png" class="socialBtn" /></a></div>
+            </div>
+        </div>
+        <div class="copyrightDiv">
+            <img src="assets/img/copyright.png" class="copyright centerWrapper" />
+        </div>
+    </div>
+
+    <div id="popoutDiv" class="popoutDiv" style="display:none">
+        <div id="resultDiv" class="popoutContent">
             <div class="resultGridContainer XcenterWrapper">
                 <div>
                     <img class="resultTitle" src="assets/img/resultTitle.png" />
@@ -177,22 +196,7 @@
                 <img class="attentionImg centerWrapper" src="assets/img/attention.png" />
             </div>
         </div>
-
-    </div>
-    <div id="footer" class="footer">
-        <!--<div class="footerCtrlDiv">
-            <div class="footerCtrl centerWrapper"></div>
-        </div>-->
-        <div class="socialDiv">
-            <div class="socialGridContainer centerWrapper">
-                <div><a href="https://www.facebook.com/ttmasktaiwan" target="_blank"><img src="assets/img/btnFB.png" class="socialBtn" onclick="on" /></a></div>
-                <div><a href="https://page.line.me/ttmask" target="_blank"><img src="assets/img/btnLine.png" class="socialBtn" /></a></div>
-                <div><a href="https://www.instagram.com/ttm_tw/" target="_blank"><img src="assets/img/btnIG.png" class="socialBtn" /></a></div>
-            </div>
-        </div>
-        <div class="copyrightDiv">
-            <img src="assets/img/copyright.png" class="copyright centerWrapper" />
-        </div>
+        <img src="assets/img/btnClose.png" class="btnClose" onclick="onBtnClose()"/>
     </div>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>

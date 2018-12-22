@@ -7,16 +7,22 @@ using System.Data.SqlClient;
 
 namespace ttmControlServer.Models
 {
+    
     public class dbMgr
     {
+        private bool _usedDB = false;
         private SqlConnection _sqlConn = null;
         public dbMgr()
         {
-
+            _usedDB = (System.Web.Configuration.WebConfigurationManager.AppSettings["useDB"] == "1");
         }
 
         public void connDB()
         {
+            if(!_usedDB)
+            {
+                return;
+            }
             var host = System.Web.Configuration.WebConfigurationManager.AppSettings["dbHost"];
             var db = System.Web.Configuration.WebConfigurationManager.AppSettings["dbDatabase"];
             var user = System.Web.Configuration.WebConfigurationManager.AppSettings["dbUser"];
@@ -28,6 +34,10 @@ namespace ttmControlServer.Models
 
         public void getQuestion(ref questionData[] questionSet)
         {
+            if (!_usedDB)
+            {
+                return;
+            }
             using (SqlCommand cmd = new SqlCommand("getQuestion", _sqlConn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -62,6 +72,10 @@ namespace ttmControlServer.Models
 
         public string getDiscount()
         {
+            if (!_usedDB)
+            {
+                return "";
+            }
             string code = "";
             using (SqlCommand cmd = new SqlCommand("getDiscountCode", _sqlConn))
             {
@@ -91,34 +105,23 @@ namespace ttmControlServer.Models
             }
             return code;
         }
-
-        public void getDJMassage(ref List<djMsgData> djMsgList)
+        
+        public void setLog(string hello, int type, int msgId)
         {
-            using (SqlCommand cmd = new SqlCommand("getDJMassage", _sqlConn))
+            if (!_usedDB)
+            {
+                return;
+            }
+            using (SqlCommand cmd = new SqlCommand("addLog", _sqlConn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@hello", SqlDbType.VarChar).Value = hello;
+                cmd.Parameters.Add("@type", SqlDbType.TinyInt).Value = type;
+                cmd.Parameters.Add("@msgId", SqlDbType.TinyInt).Value = msgId;
                 try
                 {
                     _sqlConn.Open();
-                    using (var data = cmd.ExecuteReader())
-                    {
-                        djMsgList.Clear();
-                        while (data.Read())
-                        {
-                            if (data[0].Equals(DBNull.Value))
-                            {
-                                break;
-                            }
-
-                            djMsgData djMsg = new djMsgData();
-                            djMsg.type = Convert.ToInt32(data["type"]);
-                            djMsg.typeName = data["typeName"].ToString();
-                            djMsg.msg = data["msg"].ToString();
-
-                            djMsgList.Add(djMsg);
-                        }
-
-                    }
+                    cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {

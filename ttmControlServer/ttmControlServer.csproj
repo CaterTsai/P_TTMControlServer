@@ -148,8 +148,10 @@
     <Content Include="assets\css\footer.css" />
     <Content Include="assets\css\header.css" />
     <Content Include="assets\css\main.css" />
+    <Content Include="assets\css\popout.css" />
     <Content Include="assets\img\attention.png" />
     <Content Include="assets\img\background.jpg" />
+    <Content Include="assets\img\btnClose.png" />
     <Content Include="assets\img\btnFB.png" />
     <Content Include="assets\img\btnGetInfo.png" />
     <Content Include="assets\img\btnGetInfo2.png" />
